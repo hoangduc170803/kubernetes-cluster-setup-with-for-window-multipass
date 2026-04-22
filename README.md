@@ -24,7 +24,7 @@
 2. Run the installer and follow the standard Next/Next/Finish steps.
 
 > **Hypervisor Note:**
-> - **Windows 10/11 Pro / Enterprise:** Multipass automatically uses **Hyper-V** — the native Windows hypervisor, runs smoothly.
+> - **Windows 10/11 Pro / Enterprise:** Multipass automatically uses **Hyper-V** - the native Windows hypervisor, runs smoothly.
 > - **Windows Home:** Multipass uses **VirtualBox** instead (install VirtualBox first).
 
 ### Common VM Management Commands
@@ -195,7 +195,7 @@ sudo tar Cxzvf /opt/cni/bin cni-plugins-linux-amd64-v1.9.1.tgz
 
 ### Why Static IP?
 
-By default, Multipass uses DHCP — each time you `stop/start` a VM, the IP may change. If the Master's IP changes, the entire cluster breaks because Workers can no longer find the Master.
+By default, Multipass uses DHCP - each time you `stop/start` a VM, the IP may change. If the Master's IP changes, the entire cluster breaks because Workers can no longer find the Master.
 
 ### 5.1 Disable Cloud-init Network Management
 
@@ -259,7 +259,7 @@ sudo kubeadm init \
   --apiserver-advertise-address=172.25.7.173   # <-- Static IP of Master
 ```
 
-> This takes about 1–2 minutes. When done, **copy the `kubeadm join` command** printed at the end — you'll need it in step 8.
+> This takes about 1–2 minutes. When done, **copy the `kubeadm join` command** printed at the end - you'll need it in step 8.
 
 ### 6.3 Configure kubectl for the Current User
 
@@ -340,8 +340,8 @@ kube-system       kube-apiserver-master                      1/1     Running   1
 ```
 
 > **Two IP addresses on the Master explained:**
-> - `172.25.7.173` — Physical IP of the Multipass VM (locked with Netplan), used for node-to-node communication.
-> - `192.168.x.x` — IP of the `vxlan.calico` virtual interface created by Calico, used as the data plane "tunnel" between Pods.
+> - `172.25.7.173` - Physical IP of the Multipass VM (locked with Netplan), used for node-to-node communication.
+> - `192.168.x.x` - IP of the `vxlan.calico` virtual interface created by Calico, used as the data plane "tunnel" between Pods.
 
 ---
 
@@ -410,19 +410,19 @@ k8s-worker   Ready    <none>          2m    v1.35.4
     ├─ Step 2: multipass launch ubuntu -n master      → Create Master Node
     └─ Step 2: multipass launch ubuntu -n k8s-worker  → Create Worker Node
 
-[BOTH nodes — Steps 3, 4, 5]
+[BOTH nodes - Steps 3, 4, 5]
     ├─ Install kubeadm, kubectl, kubelet
     ├─ Install containerd + runc + CNI plugins
     └─ Configure static IP (Netplan + disable Cloud-init)
 
-[MASTER only — Steps 6, 7]
+[MASTER only - Steps 6, 7]
     ├─ kubeadm init --pod-network-cidr=192.168.0.0/16 --apiserver-advertise-address=<IP>
     ├─ Configure kubectl ($HOME/.kube/config)
     └─ Install Calico CNI (Tigera Operator + eBPF)
 
-[WORKER only — Step 8]
+[WORKER only - Step 8]
     └─ kubeadm join <master-ip>:6443 --token ... --discovery-token-ca-cert-hash ...
 
-[Verify on MASTER — Step 9]
+[Verify on MASTER - Step 9]
     └─ kubectl get nodes  →  both nodes STATUS = Ready ✓
 ```
